@@ -13,10 +13,16 @@ public class UpdateCoroutineAsyncAwaitTrainingManager : MonoBehaviour
     private System.DateTime startTimeCoroutine;
     private System.TimeSpan differenceTimeCoroutine;
 
+    private bool asyncawaitLevelFlag;
+    private System.DateTime startTimeAsyncawait;
+    private System.TimeSpan differenceTimeAsyncawait;
+
     void Start()
     {
         updateLevelFlag = false;
         coroutineLevelFlag = false;
+        asyncawaitLevelFlag = false;
+        TestAsyncAwait();
         StartCoroutine(TestCoroutine());
     }
 
@@ -34,7 +40,7 @@ public class UpdateCoroutineAsyncAwaitTrainingManager : MonoBehaviour
     {
         startTimeUpdate = System.DateTime.Now;
         Debug.Log("Update Flag pressed: " + startTimeUpdate);
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < 10000000; i++)
         {
 
         }
@@ -45,11 +51,22 @@ public class UpdateCoroutineAsyncAwaitTrainingManager : MonoBehaviour
     {
         startTimeCoroutine = System.DateTime.Now;
         Debug.Log("Coroutine Flag pressed: " + startTimeCoroutine);
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < 10000000; i++)
         {
 
         }
         coroutineLevelFlag = true;
+    }
+
+    public void PressAyncAwaitFlagButton()
+    {
+        startTimeAsyncawait = System.DateTime.Now;
+        Debug.Log("Asyncawait Flag pressed: " + startTimeAsyncawait);
+        for (int i = 0; i < 10000000; i++)
+        {
+
+        }
+        asyncawaitLevelFlag = true;
     }
 
     IEnumerator TestCoroutine()
@@ -59,4 +76,13 @@ public class UpdateCoroutineAsyncAwaitTrainingManager : MonoBehaviour
         Debug.Log("Coroutine - Milliseconds: " + differenceTimeCoroutine.TotalMilliseconds);
     }
 
+    public async void TestAsyncAwait()
+    {
+        while(asyncawaitLevelFlag == false)
+        {
+            await Task.Yield();
+        }
+        differenceTimeAsyncawait = System.DateTime.Now - startTimeAsyncawait;
+        Debug.Log("Asyncawait - Milliseconds: " + differenceTimeCoroutine.TotalMilliseconds);
+    }
 }
